@@ -1,20 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <style>
-    body { width: 220px; font-family: sans-serif; text-align: center; padding: 15px; }
-    /* This makes a clean, unmissable click button */
-    .file-btn { 
-      display: block; width: 100%; padding: 12px; 
-      background: #4285f4; color: white; border: none; 
-      border-radius: 4px; font-weight: bold; cursor: pointer; 
+    body {
+      width: 290px;
+      margin: 0;
+      padding: 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #e6eef8, #d2dfef);
+      color: #1c1c1e;
     }
-    .file-btn:hover { background: #357ae8; }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 10px 30px rgba(31, 38, 135, 0.05);
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    h3 {
+      margin: 0 0 14px 0;
+      font-size: 17px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: -0.4px;
+    }
+
+    #drop-zone {
+      border: 1px dashed rgba(0, 122, 255, 0.35);
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      padding: 38px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      font-size: 14px;
+      font-weight: 500;
+      color: #007aff;
+    }
+
+    #drop-zone:hover, #drop-zone.hover {
+      background: rgba(0, 122, 255, 0.08);
+      border-color: #007aff;
+    }
+
+    .status-text {
+      font-size: 11px;
+      text-align: center;
+      color: #8e8e93;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .control-panel {
+      margin-top: 16px;
+    }
+
+    .panel-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #636366;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      padding-left: 2px;
+      letter-spacing: 0.3px;
+    }
+
+    .segmented-control {
+      display: flex;
+      background: rgba(120, 120, 128, 0.12);
+      padding: 2px;
+      border-radius: 10px;
+    }
+
+    .segmented-control label {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 0;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+      color: #3a3a3c;
+    }
+
+    .segmented-control input {
+      display: none;
+    }
+
+    .segmented-control label:has(input:checked) {
+      background: #ffffff;
+      box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+      color: #000000;
+    }
+
+    /* iOS Toggle Switches */
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding: 4px 2px;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #3a3a3c;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 26px;
+    }
+
+    .switch input { display: none; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(120, 120, 128, 0.2);
+      transition: .3s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+      background-color: #34c759; /* Apple Green */
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
   </style>
 </head>
 <body>
-  <h3>Gemini Clean Up</h3>
-  <input type="file" id="file-input" accept="image/*" class="file-btn">
+
+  <div class="glass-card">
+    <h3>Metadata Purge Pro</h3>
+    
+    <div id="drop-zone">Drop or Select Images</div>
+    <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+    <div id="status" class="status-text">Ready for Batch Processing</div>
+
+    <div class="control-panel">
+      <div class="panel-label">Export Optimization</div>
+      <div class="segmented-control">
+        <label><input type="radio" name="format" value="image/png" checked>PNG</label>
+        <label><input type="radio" name="format" value="image/jpeg">JPEG</label>
+        <label><input type="radio" name="format" value="image/webp">WebP</label>
+      </div>
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Auto-Copy to Clipboard</span>
+      <label class="switch">
+        <input type="checkbox" id="copy-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
   <canvas id="canvas" style="display:none;"></canvas>
   <script src="popup.js"></script>
 </body>

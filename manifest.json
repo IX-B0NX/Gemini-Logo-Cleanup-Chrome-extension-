@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Gemini Watermark Remover",
-  "version": "1.0",
-  "description": "Removes the visible watermark from Gemini images.",
-  "permissions": ["activeTab"],
+  "name": "Gemini Clean Up Pro",
+  "version": "3.0",
+  "description": "Purges visible watermarks, SynthID frequencies, and EXIF metadata.",
+  "permissions": ["activeTab", "clipboardWrite"],
   "action": {
     "default_popup": "popup.html"
   }
